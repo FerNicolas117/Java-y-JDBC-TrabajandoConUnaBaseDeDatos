@@ -10,4 +10,4 @@ El comando `SELECT` es considerado como Statement en Java. Para crear una Statem
 
 Así, con ese objeto, podemos crear la query SQL, usando el método del statement llamando `execute` y en su parámetro colocamos la query. 
 
-El `execute` devuelve un booleano, por qué? Esto es para indicar que el resultado de statement que nosotros creamos, nos indica si el resultado es un listado o no, si es un listado devuelve un `True`, pero si estamos ejecutando un INSERT, UPDATE o un DELETE es resultado no es un listado, entonces devuelve el resultado del booleano como un `false`.
+El `execute` devuelve un booleano, por qué? Esto es para indicar acerca del resultado de statement que nosotros creamos, nos indica si el resultado es un listado o no, si es un listado devuelve un `True`, pero si estamos ejecutando un INSERT, UPDATE o un DELETE es resultado no es un listado, entonces devuelve el resultado del booleano como un `false`.
