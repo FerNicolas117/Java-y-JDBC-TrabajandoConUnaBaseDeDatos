@@ -12,12 +12,16 @@ public class ProductoController {
 
 	public int modificar(String nombre, String descripcion, Integer id, Integer cantidad) throws SQLException {
 		Connection connection = new ConnectionFactory().recuperaConexion();
-		Statement statement = connection.createStatement();
-		statement.execute("UPDATE producto SET "
-			+ " nombre = '" + nombre + "'"
-			+ ", descripcion = '" + descripcion + "'"
-			+ ", cantidad = " + cantidad
-			+ " WHERE id = " + id);
+		PreparedStatement statement = connection.prepareStatement(
+				"UPDATE producto SET nombre = ?, descripcion = ?, cantidad = ? WHERE id = ?"
+		);
+
+		statement.setString(1, nombre);
+		statement.setString(2, descripcion);
+		statement.setInt(3, cantidad);
+		statement.setInt(4, id);
+
+		statement.execute();
 		System.out.println(nombre);
 		System.out.println(id);
 
@@ -28,8 +32,9 @@ public class ProductoController {
 
 	public int eliminar(Integer id) throws SQLException {
 		Connection connection = new ConnectionFactory().recuperaConexion();
-		Statement statement = connection.createStatement();
-		statement.execute("DELETE FROM producto WHERE id = " + id);
+		PreparedStatement statement = connection.prepareStatement("DELETE FROM producto WHERE id = ?");
+		statement.setInt(1, id);
+		statement.execute();
 
 		/*
 		Para saber si algo fue realmente eliminado, existe el
@@ -46,8 +51,8 @@ public class ProductoController {
 	 */
 	public List<Map<String, String>> listar() throws SQLException {
 		Connection connection = new ConnectionFactory().recuperaConexion();
-		Statement statement = connection.createStatement();
-		boolean result = statement.execute("SELECT id, nombre, descripcion, cantidad FROM producto");
+		PreparedStatement statement = connection.prepareStatement("SELECT id, nombre, descripcion, cantidad FROM producto");
+		statement.execute();
 
 		ResultSet resultSet = statement.getResultSet();
 		List<Map<String, String>> resultado = new ArrayList<>();
@@ -66,11 +71,15 @@ public class ProductoController {
 
     public void guardar(Map<String, String> producto) throws SQLException {
 		Connection connection = new ConnectionFactory().recuperaConexion();
-		Statement statement = connection.createStatement();
-		statement.execute("INSERT INTO producto (nombre, descripcion, cantidad) "
-				+ " VALUES ('" + producto.get("nombre") + "','"
-				+ producto.get("descripcion") + "', "
-				+ producto.get("cantidad") + ")", Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = connection.prepareStatement(
+				"INSERT INTO producto (nombre, descripcion, cantidad) "
+						+ " VALUES (?, ?, ?)",
+				Statement.RETURN_GENERATED_KEYS);
+
+		statement.setString(1, producto.get("nombre"));
+		statement.setString(2, producto.get("descripcion"));
+		statement.setInt(3, Integer.valueOf(producto.get("cantidad")));
+		statement.execute();
 
 		ResultSet resultSet = statement.getGeneratedKeys();
 
