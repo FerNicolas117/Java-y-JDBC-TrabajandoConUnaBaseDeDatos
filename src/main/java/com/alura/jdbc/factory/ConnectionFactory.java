@@ -1,5 +1,8 @@
 package com.alura.jdbc.factory;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,11 +16,19 @@ public class ConnectionFactory {
      * @return
      * @throws SQLException
      */
+
+    private final DataSource dataSource;
+
+    public ConnectionFactory() {
+        var pooledDataSource = new ComboPooledDataSource(); // Clase de c3p0
+        pooledDataSource.setJdbcUrl("jdbc:mysql://localhost/control_de_stock?useTimeZone=true&serverTimeZone=UTC");
+        pooledDataSource.setUser("root");
+        pooledDataSource.setPassword("root117");
+
+        this.dataSource = pooledDataSource;
+    }
+
     public Connection recuperaConexion() throws SQLException {
-        return DriverManager.getConnection(
-                "jdbc:mysql://localhost/control_de_stock?useTimeZone=true&serverTimeZone=UTC",
-                "root",
-                "root117"
-        );
+        return this.dataSource.getConnection();
     }
 }
