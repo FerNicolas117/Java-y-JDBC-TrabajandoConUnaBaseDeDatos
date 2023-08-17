@@ -27,7 +27,7 @@ El `PreparedStatement` mantiene la query compilada en la base de datos, de for
 - Para garantizar el cierre de los recursos abiertos en el código, Java provee un recurso llamado *try-with-resources* para ayudarnos;
     - Para utilizar este recurso es necesario que la clase utilizada (como la `Connection`) implemente la interfaz `Autocloseable`.
 
-## Pool de conexiones
+## Pool de conexiones. 
 El pool de conexiones actúa como un grupo de conexiones reutilizables y listas para usar. Es una técnica que aumenta la eficiencia
 y mejora el rendimiento en las aplicaciones que requieres acceso a recuros costosos, como las bases de datos.
 
