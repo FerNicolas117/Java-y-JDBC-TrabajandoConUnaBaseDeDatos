@@ -29,7 +29,7 @@ El `PreparedStatement` mantiene la query compilada en la base de datos, de for
 
 ## Pool de conexiones. 
 El pool de conexiones actúa como un grupo de conexiones reutilizables y listas para usar. Es una técnica que aumenta la eficiencia
-y mejora el rendimiento en las aplicaciones que requieres acceso a recuros costosos, como las bases de datos.
+y mejora el rendimiento en las aplicaciones que requieren acceso a recuros costosos, como las bases de datos.
 
 El `DataSource` se asegura de que las conexiones se utilicen de manera eficiente y que no haya que estar abriendo y
 cerrando conexiones cada vez que se necesita comunicarse con la BD. 
