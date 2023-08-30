@@ -34,6 +34,6 @@ y mejora el rendimiento en las aplicaciones que requieren acceso a recuros costo
 El `DataSource` se asegura de que las conexiones se utilicen de manera eficiente y que no haya que estar abriendo y
 cerrando conexiones cada vez que se necesita comunicarse con la BD. 
 
-## Clase modelo 
+## Clase modelo (persistencia de los datos)
 Se recoienda realizar una clase dentro del paquete `model` la cual contenga los mismos campos que la entidad o la tabla de la base de datos. 
 En este aspecto se emplean los Getters y Setters dependiendo de la funcionalidad del programa. 
