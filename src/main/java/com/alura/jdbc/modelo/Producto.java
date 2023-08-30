@@ -43,7 +43,6 @@ public class Producto {
                 this.id,
                 this.nombre,
                 this.descripcion,
-                this.cantidad
-        );
+                this.cantidad);
     }
 }
