@@ -1,6 +1,7 @@
 package com.alura.jdbc.controller;
 
 import com.alura.jdbc.factory.ConnectionFactory;
+import com.alura.jdbc.modelo.Producto;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -83,12 +84,7 @@ public class ProductoController {
         }
     }
 
-    public void guardar(Map<String, String> producto) throws SQLException {
-        String nombre = producto.get("nombre");
-        String descripcion = producto.get("descripcion");
-        Integer cantidad = Integer.valueOf(producto.get("cantidad"));
-        Integer maximoCantidad = 50;
-
+    public void guardar(Producto producto) throws SQLException {
         final Connection connection = new ConnectionFactory().recuperaConexion();
         try (connection) {
             connection.setAutoCommit(false);
@@ -98,27 +94,24 @@ public class ProductoController {
                             + " VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             try (statement) {
-                do {
-                    int cantidadParaGuardar = Math.min(cantidad, maximoCantidad);
-                    ejecutaRegistro(statement, nombre, descripcion, cantidadParaGuardar);
-                    cantidad -= maximoCantidad;
-                } while (cantidad > 0);
+                ejecutaRegistro(producto, statement);
                 connection.commit();
                 System.out.println("COMMIT!");
             } catch (Exception e) {
-                connection.rollback();
+                e.printStackTrace();
                 System.out.println("ROLLBACK!");
+                connection.rollback();
             }
         }
     }
 
-    private static void ejecutaRegistro(PreparedStatement statement, String nombre, String descripcion, Integer cantidad) throws SQLException {
+    private static void ejecutaRegistro(Producto producto, PreparedStatement statement) throws SQLException {
 		/*if (cantidad < 50) {
 			throw new RuntimeException("Error!");
 		}*/
-        statement.setString(1, nombre);
-        statement.setString(2, descripcion);
-        statement.setInt(3, cantidad);
+        statement.setString(1, producto.getNombre());
+        statement.setString(2, producto.getDescripcion());
+        statement.setInt(3, producto.getCantidad());
         statement.execute();
 
         final ResultSet resultSet = statement.getGeneratedKeys();
