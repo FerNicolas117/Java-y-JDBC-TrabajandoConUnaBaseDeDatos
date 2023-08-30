@@ -257,7 +257,10 @@ public class ControlDeStockFrame extends JFrame {
         }
 
         // TODO
-        var producto = new Producto(textoNombre.getText(), textoDescripcion.getText(), cantidadInt);
+        var producto = new Producto(textoNombre.getText(),
+                textoDescripcion.getText(),
+                cantidadInt);
+
         var categoria = comboCategoria.getSelectedItem();
 
         try {

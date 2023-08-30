@@ -84,8 +84,11 @@ public class ProductoController {
         }
     }
 
+                     // guardar(Map<String, String> producto)
     public void guardar(Producto producto) throws SQLException {
-        final Connection connection = new ConnectionFactory().recuperaConexion();
+        ConnectionFactory factory = new ConnectionFactory();
+        final Connection connection = factory.recuperaConexion();
+
         try (connection) {
             connection.setAutoCommit(false);
 
@@ -112,14 +115,14 @@ public class ProductoController {
         statement.setString(1, producto.getNombre());
         statement.setString(2, producto.getDescripcion());
         statement.setInt(3, producto.getCantidad());
+
         statement.execute();
 
         final ResultSet resultSet = statement.getGeneratedKeys();
         try (resultSet) {
             while (resultSet.next()) {
-                System.out.println(String.format(
-                        "Fue insertado el producto de ID %d",
-                        resultSet.getInt(1)));
+                producto.setId(resultSet.getInt(1));
+                System.out.printf("Fue insertado el producto %s%n", producto);
             }
         }
     }
