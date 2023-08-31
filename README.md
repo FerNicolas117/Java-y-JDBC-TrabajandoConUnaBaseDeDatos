@@ -35,5 +35,10 @@ El `DataSource` se asegura de que las conexiones se utilicen de manera eficiente
 cerrando conexiones cada vez que se necesita comunicarse con la BD. 
 
 ## Clase modelo (persistencia de los datos)
-Se recoienda realizar una clase dentro del paquete `model` la cual contenga los mismos campos que la entidad o la tabla de la base de datos. 
+Se recomienda realizar una clase dentro del paquete `model` la cual contenga los mismos campos que la entidad o la tabla de la base de datos. 
 En este aspecto se emplean los Getters y Setters dependiendo de la funcionalidad del programa. 
+
+## DAO (Data Access Object) 
+El DAO es un patrón de diseño. La finalidad de este patrón de diseño es tener un objeto que tiene como responsabilidad acceder a la BD o a cualquier fuente de datos para ejecutar las funciones necesarias. 
+**¿Cuáles son las ventajas de utilizar clases con el estándar DAO?**
+Tiene que ver con la capacidad de aislar en un lugar centralizado, toda la lógica de acceso al repositorio de datos de la entidad.
