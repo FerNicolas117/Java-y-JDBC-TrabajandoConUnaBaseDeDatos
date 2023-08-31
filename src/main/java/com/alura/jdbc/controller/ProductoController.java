@@ -12,81 +12,26 @@ import java.util.Map;
 
 public class ProductoController {
 
-    public int modificar(String nombre, String descripcion, Integer id, Integer cantidad) throws SQLException {
-        final Connection connection = new ConnectionFactory().recuperaConexion();
-        try (connection) {
+    private ProductoDAO productoDAO;
 
-            final PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE producto SET nombre = ?, descripcion = ?, cantidad = ? WHERE id = ?"
-            );
-            try (statement) {
-
-                statement.setString(1, nombre);
-                statement.setString(2, descripcion);
-                statement.setInt(3, cantidad);
-                statement.setInt(4, id);
-
-                statement.execute();
-                System.out.println(nombre);
-                System.out.println(id);
-
-                int updateCount = statement.getUpdateCount();
-                connection.close();
-                return updateCount;
-            }
-        }
+    // Inicializar cuando se inicicelice el ProductoController,Esto se hace a con el metodo constructor
+    public ProductoController() {
+        this.productoDAO = new ProductoDAO(new ConnectionFactory().recuperaConexion());
     }
 
-    public int eliminar(Integer id) throws SQLException {
-        final Connection connection = new ConnectionFactory().recuperaConexion();
-        try (connection) {
-
-            final PreparedStatement statement = connection.prepareStatement("DELETE FROM producto WHERE id = ?");
-            try (statement) {
-                statement.setInt(1, id);
-                statement.execute();
-
-                /*
-                Para saber si algo fue realmente eliminado, existe el
-                siguiente metodo, el cual devuelve un int
-                 */
-                return statement.getUpdateCount();
-            }
-        }
+    public int modificar(String nombre, String descripcion, Integer cantidad, Integer id) {
+        return productoDAO.modificar(nombre, descripcion, cantidad, id);
     }
 
-    /**
-     * Le pasamos la responsabilidad del manejo de la excepcion en la funcion
-     * CardarTabla de ControlDeStockFrame.java usando un Try-Catch
-     *
-     * @return
-     * @throws SQLException
-     */
-    public List<Map<String, String>> listar() throws SQLException {
-        final Connection connection = new ConnectionFactory().recuperaConexion();
-        try (connection) {
-
-            final PreparedStatement statement = connection.prepareStatement("SELECT id, nombre, descripcion, cantidad FROM producto");
-            try (statement) {
-                statement.execute();
-
-                ResultSet resultSet = statement.getResultSet();
-                List<Map<String, String>> resultado = new ArrayList<>();
-                while (resultSet.next()) {
-                    Map<String, String> fila = new HashMap<>();
-                    fila.put("id", String.valueOf(resultSet.getInt("id")));
-                    fila.put("nombre", resultSet.getString("nombre"));
-                    fila.put("descripcion", resultSet.getString("descripcion"));
-                    fila.put("cantidad", String.valueOf(resultSet.getInt("cantidad")));
-                    resultado.add(fila);
-                }
-                return resultado;
-            }
-        }
+    public int eliminar(Integer id)  {
+        return productoDAO.eliminar(id);
     }
 
-    public void guardar(Producto producto) throws SQLException {
-        ProductoDAO productoDAO = new ProductoDAO(new ConnectionFactory().recuperaConexion());
+    public List<Producto> listar() {
+        return productoDAO.listar();
+    }
+
+    public void guardar(Producto producto) {
         productoDAO.guardar(producto);
     }
 

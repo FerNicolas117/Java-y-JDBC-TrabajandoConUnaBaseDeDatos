@@ -12,8 +12,16 @@ public class Producto {
     private String descripcion;
     private Integer cantidad;
 
-    // Metodo Constructor con parametros
+    // Metodo constructor con parametros
     public Producto(String nombre, String descripcion, Integer cantidad) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.cantidad = cantidad;
+    }
+
+    // Metodo constructor
+    public Producto(int id, String nombre, String descripcion, int cantidad) {
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidad = cantidad;
@@ -32,6 +40,10 @@ public class Producto {
         return cantidad;
     }
 
+    public Integer getId() {
+        return this.id;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -45,4 +57,5 @@ public class Producto {
                 this.descripcion,
                 this.cantidad);
     }
+
 }
