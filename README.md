@@ -39,6 +39,7 @@ Se recomienda realizar una clase dentro del paquete `model` la cual contenga los
 En este aspecto se emplean los Getters y Setters dependiendo de la funcionalidad del programa. 
 
 ## DAO (Data Access Object) 
-El DAO es un patrón de diseño. La finalidad de este patrón de diseño es tener un objeto que tiene como responsabilidad acceder a la BD o a cualquier fuente de datos para ejecutar las funciones necesarias. 
+El DAO es un patrón de diseño. La finalidad de este patrón de diseño es tener un objeto que tiene como responsabilidad acceder a la BD o a cualquier fuente de datos para ejecutar las funciones necesarias. }
+
 **¿Cuáles son las ventajas de utilizar clases con el estándar DAO?**
 Tiene que ver con la capacidad de aislar en un lugar centralizado, toda la lógica de acceso al repositorio de datos de la entidad.
