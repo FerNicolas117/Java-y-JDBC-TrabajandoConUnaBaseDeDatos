@@ -2,6 +2,7 @@ package com.alura.jdbc.controller;
 
 import com.alura.jdbc.factory.ConnectionFactory;
 import com.alura.jdbc.modelo.Producto;
+import com.alura.jdbc.dao.ProductoDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -84,47 +85,9 @@ public class ProductoController {
         }
     }
 
-                     // guardar(Map<String, String> producto)
     public void guardar(Producto producto) throws SQLException {
-        ConnectionFactory factory = new ConnectionFactory();
-        final Connection connection = factory.recuperaConexion();
-
-        try (connection) {
-            connection.setAutoCommit(false);
-
-            final PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO producto (nombre, descripcion, cantidad) "
-                            + " VALUES (?, ?, ?)",
-                    Statement.RETURN_GENERATED_KEYS);
-            try (statement) {
-                ejecutaRegistro(producto, statement);
-                connection.commit();
-                System.out.println("COMMIT!");
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("ROLLBACK!");
-                connection.rollback();
-            }
-        }
-    }
-
-    private static void ejecutaRegistro(Producto producto, PreparedStatement statement) throws SQLException {
-		/*if (cantidad < 50) {
-			throw new RuntimeException("Error!");
-		}*/
-        statement.setString(1, producto.getNombre());
-        statement.setString(2, producto.getDescripcion());
-        statement.setInt(3, producto.getCantidad());
-
-        statement.execute();
-
-        final ResultSet resultSet = statement.getGeneratedKeys();
-        try (resultSet) {
-            while (resultSet.next()) {
-                producto.setId(resultSet.getInt(1));
-                System.out.printf("Fue insertado el producto %s%n", producto);
-            }
-        }
+        ProductoDAO productoDAO = new ProductoDAO(new ConnectionFactory().recuperaConexion());
+        productoDAO.guardar(producto);
     }
 
 }
