@@ -11,6 +11,7 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private Integer cantidad;
+    private Integer categoriaId;
 
     // Metodo constructor con parametros
     public Producto(String nombre, String descripcion, Integer cantidad) {
@@ -48,6 +49,15 @@ public class Producto {
         this.id = id;
     }
 
+    public int getCategoriaId() {
+        return this.categoriaId;
+    }
+
+    public void setCategoriaId(Integer categoriaId) {
+        this.categoriaId = categoriaId;
+    }
+
+
     @Override
     public String toString() {
         return String.format(
@@ -57,5 +67,6 @@ public class Producto {
                 this.descripcion,
                 this.cantidad);
     }
+
 
 }
