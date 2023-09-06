@@ -1,6 +1,7 @@
 package com.alura.jdbc.controller;
 
 import com.alura.jdbc.factory.ConnectionFactory;
+import com.alura.jdbc.modelo.Categoria;
 import com.alura.jdbc.modelo.Producto;
 import com.alura.jdbc.dao.ProductoDAO;
 
@@ -29,6 +30,11 @@ public class ProductoController {
 
     public List<Producto> listar() {
         return productoDAO.listar();
+    }
+
+    // Sobrecarga del metodo
+    public List<Producto> listar(Categoria categoria) {
+        return productoDAO.listar(categoria.getID());
     }
 
     public void guardar(Producto producto, Integer categoriaId) {
